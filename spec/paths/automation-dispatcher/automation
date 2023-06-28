@@ -1,0 +1,41 @@
+import { PathItemObject, OperationObject, ResponseObject, ResponsesObject } from 'openapi3-ts';
+import { ref as errorResponseRef } from '../../components/responses/error';
+import { ref as contactDataFieldRef } from '../../components/schemas/automation-dispatcher/automation';
+
+const post: OperationObject = {
+  summary: 'Trigger a automation',
+  description: 'Allows the execution of an automation',
+  tags: ['Automation Trigger'],
+  requestBody: {
+    required: true,
+    content: {
+      'application/json': {
+        schema: {
+          $ref: contactDataFieldRef,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: 'Automation executed successfully',
+      content: {
+        'application/json': {
+          schema: {
+            $ref: contactDataFieldRef,
+          },
+        },
+      },
+    } as ResponseObject,
+    default: {
+      $ref: errorResponseRef,
+    },
+  } as ResponsesObject,
+};
+
+
+const path: PathItemObject = {
+  post
+};
+
+export default path;
